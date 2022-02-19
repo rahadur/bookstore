@@ -1,0 +1,5 @@
+<input [(ngModel)]="name" type="text" placeholder="Enter Name:" />
+
+<button (click)="showName($event)">Show Name</button>
+
+<hello-angular [name]="name"></hello-angular>
