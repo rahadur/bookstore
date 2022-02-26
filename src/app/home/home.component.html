@@ -1,5 +1,6 @@
-<input [(ngModel)]="name" type="text" placeholder="Enter Name:" />
+<p *ngIf="isTrue">True</p>
+<p *ngIf="!isTrue">False</p>
 
-<button (click)="showName($event)">Show Name</button>
-
-<hello-angular [name]="name"></hello-angular>
+<div *ngFor="let item of items">
+    {{ item }}
+</div>
