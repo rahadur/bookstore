@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="col-8 offset-2">
+    <form #productForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="mt3">
+        <label for="name" class="form-label">Name:</label>
+        <input
+          type="text"
+          name="name"
+          required
+          [(ngModel)]="product.name"
+          #nameControl="ngModel"
+          class="form-control"
+          placeholder="Enter your name."
+        />
+
+        <div *ngIf="nameControl.invalid && nameControl.dirty"
+          class="text-danger">
+          Name is required.
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <label for="email" class="form-label">Email:</label>
+        <input
+          type="email"
+          name="email"
+          required
+          email
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          [(ngModel)]="product.email"
+          #emailControl="ngModel"
+          class="form-control"
+          placeholder="Enter email"
+        />
+
+        <div *ngIf="emailControl.invalid && emailControl.dirty" class="text-danger">
+          Email is required.
+        </div>
+
+        <div *ngIf="emailControl.errors?.pattern" class="text-danger">
+          Invalid Email.
+        </div>
+
+      </div>
+
+      <!-- Name: {{ nameControl.value }} -->
+      <!-- Errors: {{ nameControl.errors | json }} -->
+      <!-- Name: {{ product.name }} -->
+
+      <!-- {{ nameControl.valid }}
+      {{ nameControl.invalid}} 
+      {{ nameControl.dirty }} -->
+
+      <div class="mt-3">
+        <button
+          [disabled]="productForm.invalid"
+          type="submit"
+          class="btn btn-primary">
+          Submit
+        </button>
+      </div>
+    </form>
+    Form Value: {{ productForm.value | json }}
+  </div>
+</div>

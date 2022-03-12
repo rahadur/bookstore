@@ -5,12 +5,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductRoutingModule } from './product-routing.module';
 import { ProductPageComponent } from './pages/product-page/product-page.component';
 import { CreatePageComponent } from './pages/create-page/create-page.component';
+import { TemplateFormComponent } from './pages/template-form/template-form.component';
 
 
 @NgModule({
   declarations: [
     ProductPageComponent,
-    CreatePageComponent
+    CreatePageComponent,
+    TemplateFormComponent
   ],
   imports: [
     CommonModule,
