@@ -6,13 +6,15 @@ import { ProductRoutingModule } from './product-routing.module';
 import { ProductPageComponent } from './pages/product-page/product-page.component';
 import { CreatePageComponent } from './pages/create-page/create-page.component';
 import { TemplateFormComponent } from './pages/template-form/template-form.component';
+import { ReactiveFormComponent } from './pages/reactive-form/reactive-form.component';
 
 
 @NgModule({
   declarations: [
     ProductPageComponent,
     CreatePageComponent,
-    TemplateFormComponent
+    TemplateFormComponent,
+    ReactiveFormComponent
   ],
   imports: [
     CommonModule,
