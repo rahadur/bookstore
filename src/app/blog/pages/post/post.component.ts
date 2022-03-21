@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { map, mergeMap, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-post',
@@ -10,6 +11,8 @@ export class PostComponent implements OnInit {
 
   posts: any;
 
+  loading = true;
+
   constructor(
     private http: HttpClient
   ) { }
@@ -19,8 +22,18 @@ export class PostComponent implements OnInit {
 
     
     this.http.get('https://jsonplaceholder.typicode.com/posts')
-    .subscribe((posts: any) => {
-      //console.log(posts);
+    .pipe(
+
+      tap(() => {
+        console.log('Data Loaded..');
+        this.loading = false;
+      }),
+
+      map((posts: any) => {
+        return posts.filter((p) => p.userId === 4);
+      })
+
+    ).subscribe((posts) => {
       this.posts = posts;
     })
 
