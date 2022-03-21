@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { map, mergeMap, switchMap, tap } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { catchError, of, pipe, tap } from 'rxjs';
+import { PostService } from '../../services/post.service';
 
 @Component({
   selector: 'app-post',
@@ -13,31 +14,48 @@ export class PostComponent implements OnInit {
 
   loading = true;
 
+  postForm: FormGroup;
+
   constructor(
-    private http: HttpClient
+    private fb: FormBuilder,
+    private postService: PostService
   ) { }
 
   ngOnInit(): void {
+
+    this.postForm = this.fb.group({
+      userId: [''],
+      title: [''],
+      body: ['']
+    })
+
     console.log('Before Http Call');
 
-    
-    this.http.get('https://jsonplaceholder.typicode.com/posts')
-    .pipe(
-
+    this.postService.fetchPosts().pipe(
       tap(() => {
-        console.log('Data Loaded..');
         this.loading = false;
       }),
-
-      map((posts: any) => {
-        return posts.filter((p) => p.userId === 4);
+      catchError((error) => {
+        console.log(error);
+        return of(error)
       })
-
     ).subscribe((posts) => {
+      //this.loading = false;
       this.posts = posts;
     })
 
     console.log('After Http Call');
   }
+
+
+  createPost() {
+    console.log(this.postForm.value);
+    this.postService.createPost(this.postForm.value).subscribe((post) => {
+      console.log(post);
+    })
+  }
+
+
+
 
 }
