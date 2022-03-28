@@ -7,11 +7,11 @@ export class PostService {
   constructor(private http: HttpClient) {}
 
   fetchPosts(): Observable<any> {
-/*       const params = new HttpParams()
+      /* const params = new HttpParams()
         .append('status', 'active')
         .append('sort', 'created_date') */
 
-    return this.http.get('https://jsonplaceholder.typicode.com/posts' );
+    return this.http.get('https://jsonplaceholder.typicode.com/posts');
   }
 
   createPost(post: any) {
@@ -24,5 +24,9 @@ export class PostService {
       `https://jsonplaceholder.typicode.com/posts/${post.id}`,
       post
     )
+  }
+
+  deletePost(postId: string): Observable<any> {
+    return this.http.delete(`https://jsonplaceholder.typicode.com/posts/${postId}`)
   }
 }

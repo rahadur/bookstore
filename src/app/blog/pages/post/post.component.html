@@ -48,11 +48,13 @@
     <ng-container *ngIf="!loading">
       <div class="col-6 mt-3" *ngFor="let post of posts">
 
-        <div class="card" (click)="selectPost(post)">
-
-          <div class="card-body">
+        <div class="card">
+          <div class="card-body" (click)="selectPost(post)">
             <h2>{{ post.title }}</h2>
             <p>{{ post.body }}</p>
+          </div>
+          <div class="card-footer">
+            <button (click)="deletePost(post.id)" class="btn btn-danger">Delete</button>
           </div>
         </div>
       </div>

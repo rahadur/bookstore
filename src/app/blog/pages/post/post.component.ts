@@ -79,7 +79,17 @@ export class PostComponent implements OnInit {
   }
 
   selectPost(post) {
+    console.log(post);
+    
     this.postForm.patchValue(post);
     this.isUpdateForm = true;
+  }
+
+
+  deletePost(postId): void {
+    this.postService.deletePost(postId).subscribe((response) => {
+      console.log(response);
+      this.posts = this.posts.filter((item) => item.id !== postId);
+    })
   }
 }
