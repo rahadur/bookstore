@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NavigationService } from './services/navigation.service';
 
 
 @NgModule({
@@ -14,7 +15,7 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [NavigationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { catchError, of, pipe, tap } from 'rxjs';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { PostService } from '../../services/post.service';
 
 @Component({
@@ -19,17 +21,12 @@ export class PostComponent implements OnInit {
 
   showAlert = false;
 
-  constructor(private fb: FormBuilder, private postService: PostService) {}
+  constructor(
+    private router: Router,
+    private navigationService: NavigationService,
+    private postService: PostService) {}
 
   ngOnInit(): void {
-    this.postForm = this.fb.group({
-      id: [''],
-      userId: [''],
-      title: [''],
-      body: [''],
-    });
-
-    console.log('Before Http Call');
 
     this.postService
       .fetchPosts()
@@ -50,39 +47,16 @@ export class PostComponent implements OnInit {
     console.log('After Http Call');
   }
 
-  createPost() {
-    console.log(this.postForm.value);
-
-    if (!this.isUpdateForm) {
-      this.postService.createPost(this.postForm.value).subscribe((post) => {
-        console.log(post);
-        this.posts.push(post)
-      });
-    } else {
-      this.postService.updatePost(this.postForm.value).subscribe((post) => {
-        /* const temPosts = this.posts.filter((item) => item.id !== post.id);
-        temPosts.push(post); */
-        //this.posts = temPosts;
-
-        this.showAlert = true;
-
-        const temPost = this.posts.find((item) => item.id === post.id);
-        const indexOf = this.posts.indexOf(temPost);
-        this.posts[indexOf] = post
-
-        // this.postForm.patchValue({ userId: '', title: '', body: ''})
-        this.postForm.reset();
-
-        this.isUpdateForm = false;
-      });
-    }
+  createPost(post): void {
+    this.postService.createPost(post).subscribe((post) => {
+      console.log(post);
+      this.posts.push(post)
+    });
   }
 
   selectPost(post) {
-    console.log(post);
-    
-    this.postForm.patchValue(post);
-    this.isUpdateForm = true;
+    this.navigationService.post = post;
+    this.router.navigateByUrl(`/blog/${post.id}`);
   }
 
 
